@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fpdart/fpdart.dart';
 
 import '../core/core.dart';
-import '../core/providers.dart';
 
 final authAPIProvider = Provider((ref) {
   return AuthAPI(account: ref.watch(appwriteAccountProvider));
@@ -74,7 +73,7 @@ class AuthAPI implements IAuthAPI {
   Future<model.User?> currentUserAccount() async {
     try {
       return await _account.get();
-    } on AppwriteException catch (e) {
+    } on AppwriteException {
       return null;
     } catch (e) {
       return null;
