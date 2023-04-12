@@ -1,0 +1,25 @@
+package_rename_config:
+  android:
+    app_name: Twitter Clone
+    package_name: com.acelords.twitter_clone
+    override_old_package: com.example.twitter_clone
+    lang: kotlin
+
+  ios:
+    app_name: Twitter Clone
+    bundle_name: # (String) The bundle name of the ios app
+    package_name: com.acelords.twitter_clone
+
+  linux:
+    app_name: Twitter Clone
+    package_name: com.acelords.twitter_clone
+    exe_name: Twitter Clone
+
+  macos:
+    app_name: Twitter Clone
+    package_name: com.acelords.twitter_clone
+    copyright_notice: proprietary
+
+  web:
+    app_name: Twitter Clone
+    description: Twitter Clone for AceLords Apps
