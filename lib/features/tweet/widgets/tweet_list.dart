@@ -15,7 +15,7 @@ class TweetList extends ConsumerWidget {
             return ListView.builder(
               itemCount: tweets.length,
               itemBuilder: (context, index) => Container(
-                margin: const EdgeInsets.only(bottom: 15),
+                margin: const EdgeInsets.only(bottom: 12),
                 child: TweetCard(tweet: tweets[index]),
               ),
             );

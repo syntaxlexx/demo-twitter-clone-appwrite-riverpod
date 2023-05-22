@@ -4,12 +4,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 import '../../../common/common.dart';
+import '../../../contants/constants.dart';
 import '../../../core/enums/tweet_type_enum.dart';
 import '../../../models/tweet_model.dart';
 import '../../../theme/theme.dart';
 import '../../auth/controller/auth_controller.dart';
 import 'carousel_image.dart';
 import 'hashtag_text.dart';
+import 'tweet_icon_button.dart';
 
 class TweetCard extends ConsumerWidget {
   final Tweet tweet;
@@ -69,10 +71,56 @@ class TweetCard extends ConsumerWidget {
                               link: tweet.link,
                             ),
                           ],
+
+                          Container(
+                            margin: const EdgeInsets.only(
+                              top: 10,
+                              right: 20,
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                TweetIconButton(
+                                  pathName: AssetsConstants.viewsIcon,
+                                  text: (tweet.comments.length + tweet.resharedCount + tweet.likes.length).toString(),
+                                  onTap: () {},
+                                ),
+                                TweetIconButton(
+                                  pathName: AssetsConstants.commentIcon,
+                                  text: tweet.comments.length.toString(),
+                                  onTap: () {},
+                                ),
+                                TweetIconButton(
+                                  pathName: AssetsConstants.retweetIcon,
+                                  text: tweet.resharedCount.toString(),
+                                  onTap: () {},
+                                ),
+                                TweetIconButton(
+                                  pathName: AssetsConstants.likeOutlinedIcon,
+                                  text: tweet.likes.length.toString(),
+                                  onTap: () {},
+                                ),
+                                IconButton(
+                                  onPressed: () {},
+                                  icon: const Icon(
+                                    Icons.share_outlined,
+                                    size: 25,
+                                    color: Pallete.greyColor,
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 1,
+                          ),
                         ],
                       ),
                     ),
                   ],
+                ),
+                const Divider(
+                  color: Pallete.greyColor,
                 ),
               ],
             );
