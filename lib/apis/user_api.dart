@@ -34,6 +34,7 @@ class UserAPI implements IUserAPI {
       );
       return right(null);
     } on AppwriteException catch (e, st) {
+      logger.e(e);
       return left(Failure(e.message ?? 'unexpected error occurred', st));
     } catch (e, st) {
       return left(Failure(e.toString(), st));

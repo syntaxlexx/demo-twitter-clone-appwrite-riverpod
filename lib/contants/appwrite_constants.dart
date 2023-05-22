@@ -1,7 +1,12 @@
 class AppwriteConstants {
-  static const projectId = '646b5e11bdf6510b7316';
-  static const databaseId = '646b5f1088830e135547';
-  static const endPoint = 'https://cloud.appwrite.io/v1';
+  static const projectId = '646bcf2b47c19a98a510';
+  static const databaseId = '646bcf8a8926eaaccbe4';
+  static const endPoint = 'https://apps.luckycowfreelancers.com/v1';
 
-  static const String usersCollection = '646b5f2ddbfd4491cd1b';
+  static const String usersCollection = '646bcfaea8bf229cf85c';
+  static const String tweetsCollection = '646bcfbf03d127fdfe65';
+
+  static const String imagesBucket = '646bdc392f7fe3997401';
+
+  static String imageUrl(String imageId) => '$endPoint/storage/buckets/$imagesBucket/files/$imageId/view?project=$projectId&mode=admin';
 }
