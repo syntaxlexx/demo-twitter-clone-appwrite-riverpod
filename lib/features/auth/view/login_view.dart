@@ -6,6 +6,7 @@ import '../../../common/common.dart';
 import '../../../contants/constants.dart';
 import '../../../theme/pallete.dart';
 import '../controller/auth_controller.dart';
+import '../home/view/home_view.dart';
 import '../widgets/auth_field.dart';
 import 'signup_view.dart';
 
@@ -63,6 +64,7 @@ class _LoginViewState extends ConsumerState<LoginView> {
                       AuthField(
                         controller: passwordCtl,
                         hintText: 'Password',
+                        obscureText: true,
                       ),
                       const SizedBox(
                         height: 25,

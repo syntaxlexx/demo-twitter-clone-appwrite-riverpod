@@ -7,7 +7,7 @@ analyzer:
 
 linter:
   rules:
-    avoid_types_on_closure_parameters: true
+    avoid_types_on_closure_parameters: false
     avoid_void_async: true
     cancel_subscriptions: true
     close_sinks: true

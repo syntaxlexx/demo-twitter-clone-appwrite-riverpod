@@ -1,12 +1,15 @@
 import 'package:appwrite/models.dart' as model;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:logger/logger.dart';
 
 import '../../../apis/apis.dart';
 import '../../../core/utils.dart';
 import '../../../models/models.dart';
 import '../home/view/home_view.dart';
 import '../view/login_view.dart';
+
+var logger = Logger();
 
 final authControllerProvider = StateNotifierProvider<AuthController, bool>((ref) {
   return AuthController(
@@ -18,6 +21,19 @@ final authControllerProvider = StateNotifierProvider<AuthController, bool>((ref)
 final currentUserAccountProvider = FutureProvider((ref) {
   final authController = ref.watch(authControllerProvider.notifier);
   return authController.currentUser();
+});
+
+final userDetailsProvider = FutureProvider.family((ref, String uid) {
+  final authController = ref.watch(authControllerProvider.notifier);
+  return authController.getUserData(uid);
+});
+
+final currentUserDetailsProvider = FutureProvider((ref) {
+  final currentUserId = ref.watch(currentUserAccountProvider).value!.$id;
+  logger.d(currentUserId);
+  final userDetails = ref.watch(userDetailsProvider(currentUserId));
+  logger.d(userDetails);
+  return userDetails.value;
 });
 
 class AuthController extends StateNotifier<bool> {
@@ -51,7 +67,7 @@ class AuthController extends StateNotifier<bool> {
           following: const [],
           profilePic: '',
           bannerPic: '',
-          uid: '',
+          uid: r.$id,
           bio: '',
           isTwitterBlue: false,
         );
@@ -81,9 +97,26 @@ class AuthController extends StateNotifier<bool> {
     res.fold(
       (l) => showSnackbar(context, l.message),
       (r) {
-        showSnackbar(context, 'Account has been created. Please login.');
         Navigator.push(context, HomeView.route());
       },
     );
+  }
+
+  Future<UserModel> getUserData(String uid) async {
+    final document = await _userAPI.getUserData(uid);
+    logger.i('document for current user found!');
+    final updatedUser = UserModel.fromMap(document.data);
+    return updatedUser;
+  }
+
+  Future<void> logout(BuildContext context) async {
+    final res = await _authAPI.logout();
+    res.fold((l) => null, (r) {
+      Navigator.pushAndRemoveUntil(
+        context,
+        LoginView.route(),
+        (route) => false,
+      );
+    });
   }
 }

@@ -63,6 +63,7 @@ class _SignupViewState extends ConsumerState<SignupView> {
                       AuthField(
                         controller: passwordCtl,
                         hintText: 'Password',
+                        obscureText: true,
                       ),
                       const SizedBox(
                         height: 25,

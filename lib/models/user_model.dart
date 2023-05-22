@@ -66,8 +66,8 @@ class UserModel extends Equatable {
     return UserModel(
       email: map['email'] as String,
       name: map['name'] as String,
-      followers: List<String>.from((map['followers'] as List<String>)),
-      following: List<String>.from((map['following'] as List<String>)),
+      followers: map['followers'] != null ? List<String>.from((map['followers'] as List)) : [],
+      following: map['following'] != null ? List<String>.from((map['following'] as List)) : [],
       profilePic: map['profilePic'] as String,
       bannerPic: map['bannerPic'] as String,
       uid: map['\$id'] as String,
