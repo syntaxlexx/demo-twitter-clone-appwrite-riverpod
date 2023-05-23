@@ -5,23 +5,23 @@ import 'package:flutter/material.dart';
 class UserModel extends Equatable {
   final String email;
   final String name;
-  final List<String> followers;
-  final List<String> following;
-  final String profilePic;
-  final String bannerPic;
+  final List<String>? followers;
+  final List<String>? following;
+  final String? profilePic;
+  final String? bannerPic;
   final String uid;
-  final String bio;
+  final String? bio;
   final bool isTwitterBlue;
 
   const UserModel({
     required this.email,
     required this.name,
-    required this.followers,
-    required this.following,
-    required this.profilePic,
-    required this.bannerPic,
+    this.followers,
+    this.following,
+    this.profilePic,
+    this.bannerPic,
     required this.uid,
-    required this.bio,
+    this.bio,
     required this.isTwitterBlue,
   });
 
@@ -68,10 +68,10 @@ class UserModel extends Equatable {
       name: map['name'] as String,
       followers: map['followers'] != null ? List<String>.from((map['followers'] as List)) : [],
       following: map['following'] != null ? List<String>.from((map['following'] as List)) : [],
-      profilePic: map['profilePic'] as String,
-      bannerPic: map['bannerPic'] as String,
+      profilePic: map['profilePic'] as String?,
+      bannerPic: map['bannerPic'] as String?,
       uid: map['\$id'] as String,
-      bio: map['bio'] as String,
+      bio: map['bio'] as String?,
       isTwitterBlue: map['isTwitterBlue'] as bool,
     );
   }
@@ -80,7 +80,7 @@ class UserModel extends Equatable {
   bool get stringify => true;
 
   @override
-  List<Object> get props {
+  List<Object?> get props {
     return [
       email,
       name,

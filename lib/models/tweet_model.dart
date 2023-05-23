@@ -7,29 +7,38 @@ import '../core/enums/tweet_type_enum.dart';
 class Tweet extends Equatable {
   final String text;
   final List<String> hashtags;
-  final String link;
-  final List<String> imageLinks;
+  final String? link;
+  final List<String>? imageLinks;
   final String userId;
   final TweetType tweetType;
   final DateTime tweetedAt;
-  final List<String> likes;
-  final List<String> comments;
+  final List<String>? likes;
+  final List<String>? comments;
   final String id;
   final int resharedCount;
+  final String? retweetedBy;
 
   const Tweet({
     required this.text,
     required this.hashtags,
-    required this.link,
-    required this.imageLinks,
+    this.link,
+    this.imageLinks,
     required this.userId,
     required this.tweetType,
     required this.tweetedAt,
-    required this.likes,
-    required this.comments,
+    this.likes,
+    this.comments,
     required this.id,
     required this.resharedCount,
+    this.retweetedBy,
   });
+
+  int get viewCount => (comments?.length ?? 0) + resharedCount + (likes?.length ?? 0);
+  String? get formattedLink => link != null
+      ? link!.startsWith('https://')
+          ? link
+          : 'https://$link'
+      : null;
 
   Tweet copyWith({
     String? text,
@@ -43,6 +52,7 @@ class Tweet extends Equatable {
     List<String>? comments,
     String? id,
     int? resharedCount,
+    String? retweetedBy,
   }) {
     return Tweet(
       text: text ?? this.text,
@@ -56,6 +66,7 @@ class Tweet extends Equatable {
       comments: comments ?? this.comments,
       id: id ?? this.id,
       resharedCount: resharedCount ?? this.resharedCount,
+      retweetedBy: retweetedBy ?? this.retweetedBy,
     );
   }
 
@@ -71,6 +82,7 @@ class Tweet extends Equatable {
       'likes': likes,
       'comments': comments,
       'resharedCount': resharedCount,
+      'retweetedBy': retweetedBy,
     };
   }
 
@@ -78,15 +90,16 @@ class Tweet extends Equatable {
     return Tweet(
       text: map['text'] as String,
       hashtags: List<String>.from(map['hashtags'] as List),
-      link: map['link'] as String,
-      imageLinks: List<String>.from(map['imageLinks'] as List),
+      link: map['link'] as String?,
+      imageLinks: map['imageLinks'] != null ? List<String>.from(map['imageLinks'] as List) : null,
       userId: map['userId'] as String,
       tweetType: (map['tweetType'] as String).toTweetTypeEnum(),
       tweetedAt: DateTime.fromMillisecondsSinceEpoch(map['tweetedAt'] as int),
-      likes: List<String>.from(map['likes'] as List),
-      comments: List<String>.from(map['comments'] as List),
+      likes: map['likes'] != null ? List<String>.from(map['likes'] as List) : null,
+      comments: map['comments'] != null ? List<String>.from(map['comments'] as List) : null,
       id: map['\$id'] as String,
       resharedCount: map['resharedCount'] as int,
+      retweetedBy: map['retweetedBy'] as String?,
     );
   }
 
@@ -94,7 +107,7 @@ class Tweet extends Equatable {
   bool get stringify => true;
 
   @override
-  List<Object> get props {
+  List<Object?> get props {
     return [
       text,
       hashtags,
@@ -107,6 +120,7 @@ class Tweet extends Equatable {
       comments,
       id,
       resharedCount,
+      retweetedBy,
     ];
   }
 }

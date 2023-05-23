@@ -65,10 +65,7 @@ class AuthController extends StateNotifier<bool> {
           name: getNameFromEmail(r.email),
           followers: const [],
           following: const [],
-          profilePic: '',
-          bannerPic: '',
           uid: r.$id,
-          bio: '',
           isTwitterBlue: false,
         );
 

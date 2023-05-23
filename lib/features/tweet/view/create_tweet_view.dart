@@ -42,6 +42,8 @@ class _CreateTweetViewState extends ConsumerState<CreateTweetView> {
           text: tweetTextController.text,
           context: context,
         );
+
+    Navigator.pop(context);
   }
 
   @override
@@ -82,7 +84,7 @@ class _CreateTweetViewState extends ConsumerState<CreateTweetView> {
                     Row(
                       children: [
                         CircleAvatar(
-                          backgroundImage: NetworkImage(currentUser.profilePic),
+                          backgroundImage: NetworkImage(currentUser.profilePic!),
                           radius: 30,
                         ),
                         const SizedBox(
