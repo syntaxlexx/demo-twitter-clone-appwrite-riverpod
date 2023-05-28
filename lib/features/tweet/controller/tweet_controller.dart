@@ -4,12 +4,11 @@ import 'package:appwrite/appwrite.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../apis/apis.dart';
 import '../../../apis/storage_api.dart';
-import '../../../apis/tweet_api.dart';
 import '../../../core/enums/tweet_type_enum.dart';
 import '../../../core/utils.dart';
 import '../../../models/models.dart';
-import '../../../models/tweet_model.dart';
 import '../../auth/controller/auth_controller.dart';
 
 final tweetControllerProvider = StateNotifierProvider.autoDispose<TweetController, bool>(
