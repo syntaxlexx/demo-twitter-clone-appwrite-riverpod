@@ -17,6 +17,7 @@ class Tweet extends Equatable {
   final String id;
   final int resharedCount;
   final String? retweetedBy;
+  final String? repliedTo;
 
   const Tweet({
     required this.text,
@@ -31,6 +32,7 @@ class Tweet extends Equatable {
     required this.id,
     required this.resharedCount,
     this.retweetedBy,
+    this.repliedTo,
   });
 
   int get viewCount => (comments?.length ?? 0) + resharedCount + (likes?.length ?? 0);
@@ -53,6 +55,7 @@ class Tweet extends Equatable {
     String? id,
     int? resharedCount,
     String? retweetedBy,
+    String? repliedTo,
   }) {
     return Tweet(
       text: text ?? this.text,
@@ -67,6 +70,7 @@ class Tweet extends Equatable {
       id: id ?? this.id,
       resharedCount: resharedCount ?? this.resharedCount,
       retweetedBy: retweetedBy ?? this.retweetedBy,
+      repliedTo: repliedTo ?? this.repliedTo,
     );
   }
 
@@ -83,6 +87,7 @@ class Tweet extends Equatable {
       'comments': comments,
       'resharedCount': resharedCount,
       'retweetedBy': retweetedBy,
+      'repliedTo': repliedTo,
     };
   }
 
@@ -100,6 +105,7 @@ class Tweet extends Equatable {
       id: map['\$id'] as String,
       resharedCount: map['resharedCount'] as int,
       retweetedBy: map['retweetedBy'] as String?,
+      repliedTo: map['repliedTo'] as String?,
     );
   }
 
@@ -121,6 +127,7 @@ class Tweet extends Equatable {
       id,
       resharedCount,
       retweetedBy,
+      repliedTo,
     ];
   }
 }
