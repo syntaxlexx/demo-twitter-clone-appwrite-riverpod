@@ -7,6 +7,7 @@ import '../../../theme/theme.dart';
 import '../../auth/controller/auth_controller.dart';
 import '../../tweet/widgets/tweet_card.dart';
 import '../controller/user_profile_controller.dart';
+import '../view/edit_profile_view.dart';
 import 'follow_count.dart';
 
 class UserProfile extends ConsumerWidget {
@@ -31,7 +32,10 @@ class UserProfile extends ConsumerWidget {
                     children: [
                       Positioned.fill(
                         child: user.bannerPic != null && user.bannerPic!.isNotEmpty
-                            ? Image.network(user.bannerPic!)
+                            ? Image.network(
+                                user.bannerPic!,
+                                fit: BoxFit.cover,
+                              )
                             : Container(
                                 color: Pallete.blueColor,
                               ),
@@ -47,7 +51,12 @@ class UserProfile extends ConsumerWidget {
                         alignment: Alignment.bottomRight,
                         margin: const EdgeInsets.all(20),
                         child: OutlinedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            if (currentUser.uid == user.uid) {
+                              Navigator.push(context, EditProfileView.route());
+                              return;
+                            }
+                          },
                           style: ElevatedButton.styleFrom(
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20),
