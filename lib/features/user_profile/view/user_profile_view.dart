@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../common/common.dart';
+import '../../../contants/constants.dart';
 import '../../../models/models.dart';
+import '../controller/user_profile_controller.dart';
 import '../widgets/user_profile.dart';
 
 class UserProfileView extends ConsumerWidget {
@@ -12,8 +15,22 @@ class UserProfileView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    UserModel copyOfUser = user;
+
     return Scaffold(
-      body: UserProfile(user: user),
+      body: ref.watch(getLatestUserProfileDataProvider).when(
+            data: (data) {
+              if (data.events.contains(
+                'databases.*.collections.${AppwriteConstants.usersCollection}.documents.${user.uid}.update',
+              )) {
+                copyOfUser = UserModel.fromMap(data.payload);
+              }
+
+              return UserProfile(user: copyOfUser);
+            },
+            error: (error, stackTrace) => ErrorText(error: error.toString()),
+            loading: () => UserProfile(user: copyOfUser),
+          ),
     );
   }
 }

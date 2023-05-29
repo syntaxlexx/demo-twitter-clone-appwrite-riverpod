@@ -9,7 +9,10 @@ import '../core/core.dart';
 import '../models/models.dart';
 
 final userAPIProvider = Provider((ref) {
-  return UserAPI(db: ref.watch(appwriteDatabaseProvider));
+  return UserAPI(
+    db: ref.watch(appwriteDatabaseProvider),
+    realtime: ref.watch(appwriteRealtimeProvider),
+  );
 });
 
 abstract class IUserAPI {
@@ -17,13 +20,19 @@ abstract class IUserAPI {
   Future<model.Document> getUserData(String uid);
   Future<List<model.Document>> searchUserByName(String name);
   FutureEitherVoid udpateUserData(UserModel userModel);
+  Stream<RealtimeMessage> getLatestUserProfileData();
+  FutureEitherVoid followUser(UserModel userModel);
+  FutureEitherVoid addToFollowing(UserModel userModel);
 }
 
 class UserAPI implements IUserAPI {
   final Databases _db;
+  final Realtime _realtime;
   var logger = Logger();
 
-  UserAPI({required Databases db}) : _db = db;
+  UserAPI({required Databases db, required Realtime realtime})
+      : _db = db,
+        _realtime = realtime;
 
   @override
   FutureEitherVoid saveUserData(UserModel userModel) async {
@@ -73,6 +82,53 @@ class UserAPI implements IUserAPI {
         collectionId: AppwriteConstants.usersCollection,
         documentId: userModel.uid,
         data: userModel.toMap(),
+      );
+      return right(null);
+    } on AppwriteException catch (e, st) {
+      logger.e(e);
+      return left(Failure(e.message ?? 'unexpected error occurred', st));
+    } catch (e, st) {
+      return left(Failure(e.toString(), st));
+    }
+  }
+
+  @override
+  Stream<RealtimeMessage> getLatestUserProfileData() {
+    return _realtime.subscribe([
+      'databases.${AppwriteConstants.databaseId}.collections.${AppwriteConstants.usersCollection}.documents',
+    ]).stream;
+  }
+
+  @override
+  FutureEitherVoid followUser(UserModel userModel) async {
+    try {
+      await _db.updateDocument(
+        databaseId: AppwriteConstants.databaseId,
+        collectionId: AppwriteConstants.usersCollection,
+        documentId: userModel.uid,
+        data: {
+          'followers': userModel.followers,
+        },
+      );
+      return right(null);
+    } on AppwriteException catch (e, st) {
+      logger.e(e);
+      return left(Failure(e.message ?? 'unexpected error occurred', st));
+    } catch (e, st) {
+      return left(Failure(e.toString(), st));
+    }
+  }
+
+  @override
+  FutureEitherVoid addToFollowing(UserModel userModel) async {
+    try {
+      await _db.updateDocument(
+        databaseId: AppwriteConstants.databaseId,
+        collectionId: AppwriteConstants.usersCollection,
+        documentId: userModel.uid,
+        data: {
+          'following': userModel.following,
+        },
       );
       return right(null);
     } on AppwriteException catch (e, st) {

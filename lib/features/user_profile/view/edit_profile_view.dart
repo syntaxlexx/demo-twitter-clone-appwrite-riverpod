@@ -70,13 +70,14 @@ class _EditProfileViewState extends ConsumerState<EditProfileView> {
               if (currentUser == null) return;
 
               ref.watch(userProfileControllerProvider.notifier).updateUserProfile(
-                  user: currentUser.copyWith(
-                    bio: bioCtr.text,
-                    name: nameCtr.text,
-                  ),
-                  context: context,
-                  bannerFile: bannerFile,
-                  profileFile: profileFile);
+                    user: currentUser.copyWith(
+                      bio: bioCtr.text,
+                      name: nameCtr.text,
+                    ),
+                    context: context,
+                    bannerFile: bannerFile,
+                    profileFile: profileFile,
+                  );
             },
             child: const Text('Save'),
           ),

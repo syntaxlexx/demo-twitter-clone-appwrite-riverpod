@@ -11,6 +11,7 @@ import '../../../core/enums/tweet_type_enum.dart';
 import '../../../models/tweet_model.dart';
 import '../../../theme/theme.dart';
 import '../../auth/controller/auth_controller.dart';
+import '../../user_profile/view/user_profile_view.dart';
 import '../controller/tweet_controller.dart';
 import '../view/reply_tweet_screen.dart';
 import 'carousel_image.dart';
@@ -39,9 +40,12 @@ class TweetCard extends ConsumerWidget {
                         children: [
                           Container(
                             margin: const EdgeInsets.all(10.0),
-                            child: CircleAvatar(
-                              backgroundImage: NetworkImage(user.profilePic!),
-                              radius: 35,
+                            child: GestureDetector(
+                              onTap: () => Navigator.push(context, UserProfileView.route(user)),
+                              child: CircleAvatar(
+                                backgroundImage: NetworkImage(user.profilePic!),
+                                radius: 35,
+                              ),
                             ),
                           ),
                           Expanded(

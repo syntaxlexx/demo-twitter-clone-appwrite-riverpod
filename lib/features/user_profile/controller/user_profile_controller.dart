@@ -20,6 +20,10 @@ final getUserTweetsProvider = FutureProvider.autoDispose.family(
   (ref, String userId) => ref.watch(userProfileControllerProvider.notifier).getUserTweets(userId),
 );
 
+final getLatestUserProfileDataProvider = StreamProvider(
+  (ref) => ref.watch(userAPIProvider).getLatestUserProfileData(),
+);
+
 class UserProfileController extends StateNotifier<bool> {
   final TweetAPI _tweetApi;
   final StorageAPI _storageApi;
@@ -64,6 +68,45 @@ class UserProfileController extends StateNotifier<bool> {
     res.fold(
       (l) => showSnackbar(context, l.message),
       (r) => Navigator.pop(context),
+    );
+  }
+
+  Future<void> followUser({
+    required UserModel user,
+    required BuildContext context,
+    required UserModel currentUser,
+  }) async {
+    if (currentUser.following == null) {
+      currentUser = currentUser.copyWith(following: []);
+    }
+
+    if (user.followers == null) {
+      user = user.copyWith(followers: []);
+    }
+
+    // if is currently following user, unfollow
+    if (currentUser.following!.contains(user.uid)) {
+      user.followers!.remove(currentUser.uid);
+      currentUser.following!.remove(user.uid);
+    } else {
+      user.followers!.add(currentUser.uid);
+      currentUser.following!.add(user.uid);
+    }
+
+    user = user.copyWith(followers: user.followers);
+    currentUser = currentUser.copyWith(following: currentUser.following);
+
+    final res = await _userApi.followUser(user);
+    res.fold(
+      (l) => showSnackbar(context, l.message),
+      (r) async {
+        final res2 = await _userApi.addToFollowing(currentUser);
+
+        res2.fold(
+          (l) => showSnackbar(context, l.message),
+          (r) => null,
+        );
+      },
     );
   }
 }
