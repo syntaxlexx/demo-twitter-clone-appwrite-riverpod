@@ -76,13 +76,47 @@ class TweetCard extends ConsumerWidget {
                                 Row(
                                   children: [
                                     Container(
-                                      margin: const EdgeInsets.only(right: 5),
+                                      margin: EdgeInsets.only(right: user.isTwitterBlue ? 1 : 5),
                                       child: Text(
-                                        '@${user.name} ${timeago.format(tweet.tweetedAt, locale: 'en_short')}',
+                                        user.name,
+                                        style: const TextStyle(
+                                          fontSize: 19,
+                                          color: Pallete.whiteColor,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ),
+                                    if (user.isTwitterBlue)
+                                      Padding(
+                                        padding: const EdgeInsets.only(right: 5.0),
+                                        child: SvgPicture.asset(
+                                          AssetsConstants.verifiedIcon,
+                                          height: 15,
+                                        ),
+                                      ),
+                                    Expanded(
+                                      child: Container(
+                                        margin: EdgeInsets.only(right: user.isTwitterBlue ? 1 : 5),
+                                        child: Text(
+                                          '@${user.name}',
+                                          style: const TextStyle(
+                                            fontSize: 17,
+                                            color: Pallete.greyColor,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 3.0, right: 10),
+                                      child: Text(
+                                        timeago.format(tweet.tweetedAt, locale: 'en_short'),
                                         style: const TextStyle(
                                           fontSize: 17,
                                           color: Pallete.greyColor,
-                                          fontWeight: FontWeight.bold,
+                                          fontWeight: FontWeight.w400,
+                                          fontStyle: FontStyle.italic,
                                         ),
                                       ),
                                     ),

@@ -52,8 +52,8 @@ class UserProfileController extends StateNotifier<bool> {
   void updateUserProfile({
     required UserModel user,
     required BuildContext context,
-    required File? bannerFile,
-    required File? profileFile,
+    File? bannerFile,
+    File? profileFile,
   }) async {
     state = true;
 

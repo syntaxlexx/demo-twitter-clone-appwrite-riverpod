@@ -7,6 +7,7 @@ import '../../../../contants/constants.dart';
 import '../../../../theme/pallete.dart';
 import '../../../tweet/view/create_tweet_view.dart';
 import '../../controller/auth_controller.dart';
+import '../widgets/side_drawer.dart';
 
 class HomeView extends ConsumerStatefulWidget {
   static MaterialPageRoute route() => MaterialPageRoute(builder: (context) => const HomeView());
@@ -52,6 +53,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
           size: 28,
         ),
       ),
+      drawer: const SideDrawer(),
       bottomNavigationBar: CupertinoTabBar(
         currentIndex: _page,
         onTap: onPageChanged,
