@@ -5,14 +5,17 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../apis/apis.dart';
 import '../../../apis/storage_api.dart';
+import '../../../core/enums/notification_type_enum.dart';
 import '../../../core/utils.dart';
 import '../../../models/models.dart';
+import '../../notifications/controller/notification_controller.dart';
 
 final userProfileControllerProvider = StateNotifierProvider<UserProfileController, bool>(
   (ref) => UserProfileController(
     tweetApi: ref.watch(tweetAPIProvider),
     storageApi: ref.watch(storageAPIProvider),
     userApi: ref.watch(userAPIProvider),
+    notificationController: ref.watch(notificationControllerProvider.notifier),
   ),
 );
 
@@ -28,14 +31,17 @@ class UserProfileController extends StateNotifier<bool> {
   final TweetAPI _tweetApi;
   final StorageAPI _storageApi;
   final UserAPI _userApi;
+  final NotificationController _notificationController;
 
   UserProfileController({
     required TweetAPI tweetApi,
     required StorageAPI storageApi,
     required UserAPI userApi,
+    required NotificationController notificationController,
   })  : _tweetApi = tweetApi,
         _storageApi = storageApi,
         _userApi = userApi,
+        _notificationController = notificationController,
         super(false);
 
   Future<List<Tweet>> getUserTweets(String userId) async {
@@ -104,7 +110,13 @@ class UserProfileController extends StateNotifier<bool> {
 
         res2.fold(
           (l) => showSnackbar(context, l.message),
-          (r) => null,
+          (r) async {
+            await _notificationController.createNotification(
+              text: '${currentUser.name} followed you',
+              type: NotificationType.follow,
+              userId: user.uid,
+            );
+          },
         );
       },
     );

@@ -29,8 +29,10 @@ class TweetAPI implements ITweetAPI {
   final Databases _db;
   final Realtime _realtime;
 
-  TweetAPI({required Databases db, required Realtime realtime})
-      : _db = db,
+  TweetAPI({
+    required Databases db,
+    required Realtime realtime,
+  })  : _db = db,
         _realtime = realtime;
 
   @override

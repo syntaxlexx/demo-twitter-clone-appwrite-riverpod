@@ -2,7 +2,7 @@ include: package:flutter_lints/flutter.yaml
 
 analyzer:
   strong-mode:
-    implicit-casts: false
+    # strict-casts: true
 #    implicit-dynamic: false
 
 linter:
