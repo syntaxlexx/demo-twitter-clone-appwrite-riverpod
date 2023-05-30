@@ -3,7 +3,7 @@
 a Twitter clone built with AppWrite backend and Flutter Mobile App, using Riverpod State Management.
 
 
->NB: Don't spam the backend! I would hate for my bill to go up, thereby shutting down the Demo server!
+>NB: Don't spam the backend! I would hate for my bill to go up, thereby forcing me to shut down the Demo server!
 
 ![Screenshot  1](screenshot-1.jpg)
 ![Screenshot  2](screenshot-2.jpg)
