@@ -38,6 +38,10 @@ final getTweetByIdProvider = FutureProvider.autoDispose.family(
   (ref, String id) => ref.watch(tweetControllerProvider.notifier).getTweetById(id),
 );
 
+final getTweetByHashtagProvider = FutureProvider.autoDispose.family(
+  (ref, String hashtag) => ref.watch(tweetControllerProvider.notifier).getTweetsByHashtag(hashtag),
+);
+
 class TweetController extends StateNotifier<bool> {
   final Ref _ref;
   final TweetAPI _tweetAPI;
@@ -57,6 +61,11 @@ class TweetController extends StateNotifier<bool> {
 
   Future<List<Tweet>> getTweets() async {
     final list = await _tweetAPI.getTweets();
+    return list.map((tweet) => Tweet.fromMap(tweet.data)).toList();
+  }
+
+  Future<List<Tweet>> getTweetsByHashtag(String hashtag) async {
+    final list = await _tweetAPI.getTweetsByHashtag(hashtag);
     return list.map((tweet) => Tweet.fromMap(tweet.data)).toList();
   }
 

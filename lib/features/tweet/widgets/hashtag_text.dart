@@ -1,6 +1,8 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 import '../../../theme/theme.dart';
+import '../view/hashtag_view.dart';
 
 class HashtagText extends StatelessWidget {
   final String text;
@@ -21,6 +23,7 @@ class HashtagText extends StatelessWidget {
               fontSize: 18,
               fontWeight: FontWeight.bold,
             ),
+            recognizer: TapGestureRecognizer()..onTap = () => Navigator.push(context, HashtagView.route(element)),
           ),
         );
       } else if (element.startsWith('www.') || element.startsWith('https://')) {
