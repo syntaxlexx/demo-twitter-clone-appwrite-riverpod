@@ -58,12 +58,13 @@ class SideDrawer extends ConsumerWidget {
                       ),
                     ),
                   ),
-                  const ListTile(
-                    leading: Icon(
+                  ListTile(
+                    onTap: () => ref.read(authControllerProvider.notifier).logout(context),
+                    leading: const Icon(
                       Icons.logout,
                       size: 30,
                     ),
-                    title: Text(
+                    title: const Text(
                       'Logout',
                       style: TextStyle(
                         fontSize: 22,
