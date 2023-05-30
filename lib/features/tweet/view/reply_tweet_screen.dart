@@ -91,7 +91,10 @@ class ReplyTweetScreen extends ConsumerWidget {
             repliedToUserId: tweet.userId,
           );
         },
-        decoration: const InputDecoration(hintText: 'Tweet your reply'),
+        decoration: const InputDecoration(
+          hintText: 'Tweet your reply',
+          contentPadding: EdgeInsets.only(left: 20),
+        ),
       ),
     );
   }
