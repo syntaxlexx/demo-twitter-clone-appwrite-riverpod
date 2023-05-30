@@ -1,6 +1,6 @@
 # twitter_clone - A Demo App using AppWrite Realtime (Cloud / Self-Hosted)
 
-a Twitter clone built with AppWrite backend and Flutter Mobile App, using Riverpod State Management.
+A Twitter clone built with AppWrite backend and Flutter Mobile App, using Riverpod State Management.
 
 
 >NB: Don't spam the backend! I would hate for my bill to go up, thereby forcing me to shut down the Demo server!
